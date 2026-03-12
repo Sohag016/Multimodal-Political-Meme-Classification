@@ -330,5 +330,3 @@ Machine Learning & Data Science Enthusiast
 - Tesseract OCR  
 
 ---
-
-⭐ If you find this project useful, please consider giving it a **star ⭐ on GitHub**.
