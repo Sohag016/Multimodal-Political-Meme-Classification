@@ -1,27 +1,29 @@
-# Multimodal-Political-Meme-Classification
-A deep learning based multimodal classification system that detects whether a meme is Political or NonPolitical by combining image features and text extracted from the meme.
+# 🧠 Multimodal Political Meme Classification
 
-This project was developed for the Poli Meme Decode Contest (CUET CSE Fest).
+A deep learning based **multimodal classification system** that detects whether a meme is **Political or NonPolitical** by combining **image features and text extracted from the meme**.
 
-The model integrates:
+This project was developed for the **Poli Meme Decode Contest (CUET CSE Fest)**.
 
-Vision Transformer (ViT) for image understanding
+The system integrates:
 
-DistilBERT for text representation
+- Vision Transformer (ViT) for image understanding  
+- DistilBERT for text representation  
+- Tesseract OCR for extracting text from meme images  
+- Multimodal feature fusion for final classification
 
-Tesseract OCR for extracting text from meme images
 
-Multimodal feature fusion for final classification
+---
 
-Project Overview
+# 📌 Project Overview
 
-Political memes often contain important information both in the image and the text written on the image.
+Political memes often contain **important information both in the image and the text written on the image**.  
 Using only image or only text often leads to poor results.
 
-This project uses a multimodal deep learning architecture that combines both modalities to improve prediction accuracy.
+This project uses a **multimodal deep learning architecture** that combines both modalities to improve prediction accuracy.
 
-Pipeline:
+## Pipeline
 
+```
 Input Meme Image
         │
         ▼
@@ -50,70 +52,81 @@ Image → Vision Transformer (ViT)
         │
         ▼
  Political / NonPolitical
-Model Architecture
+```
+
+---
+
+# 🧩 Model Architecture
 
 The system uses two pretrained deep learning models.
 
-Image Encoder
+## Image Encoder
 
-Model:
-vit_base_patch16_384
-
-Library:
-timm
+Model: `vit_base_patch16_384`  
+Library: `timm`
 
 Purpose:
 
-Extract visual patterns from meme images
+- Extract visual patterns from meme images  
+- Capture political symbols and scene context
 
-Capture political symbols, faces, and scene context
+## Text Encoder
 
-Text Encoder
-
-Model:
-distilbert-base-uncased
+Model: `distilbert-base-uncased`
 
 Used for:
 
-Encoding OCR extracted meme text
+- Encoding OCR extracted meme text  
+- Generating contextual text embeddings  
 
-Generating contextual text embeddings
+The text encoder is **frozen during training** to reduce computational cost.
 
-To reduce training cost, the text encoder is frozen during training.
+---
 
-Feature Fusion
+## Feature Fusion
 
 Image and text features are projected into the same dimension.
 
+```
 Image Feature → Linear → 512
 Text Feature → Linear → 512
+```
 
 Then concatenated:
 
+```
 512 + 512 = 1024
-Classifier
+```
+
+---
+
+## Classifier
 
 Final classification network:
 
+```
 Linear (1024 → 256)
 ReLU
 Dropout (0.2)
 Linear (256 → 2)
+```
 
 Output classes:
 
-Political
+- Political  
+- NonPolitical
 
-NonPolitical
+---
 
-Dataset
+# 📂 Dataset
 
-Dataset used in this project:
+Dataset used:
 
-Poli Meme Decode Dataset (CUET CSE Fest)
+**Poli Meme Decode Dataset (CUET CSE Fest)**
 
 Dataset structure:
 
+```
 Dataset
 │
 ├── Train
@@ -122,104 +135,155 @@ Dataset
 │
 └── Test
     ├── Image
+```
 
 Label mapping:
 
+```
 Political = 1
 NonPolitical = 0
-OCR Processing
+```
 
-Memes usually contain text embedded in images.
+---
 
-We use Tesseract OCR to extract the text.
+# 🔎 OCR Processing
+
+Memes usually contain **text embedded in images**.
+
+We use **Tesseract OCR** to extract text from meme images.
 
 Pipeline:
 
+```
 Image → OCR → Extracted Text → DistilBERT
+```
 
 To speed up training, OCR results are cached using pickle.
 
 Cache files:
 
+```
 ocr_train.pkl
 ocr_test.pkl
-Training Configuration
-Parameter	Value
-Image Size	384
-Batch Size	16
-Epochs	5
-Learning Rate	2e-4
-Optimizer	Adam
-Seed	42
+```
+
+---
+
+# ⚙ Training Configuration
+
+| Parameter | Value |
+|-----------|-------|
+| Image Size | 384 |
+| Batch Size | 16 |
+| Epochs | 5 |
+| Learning Rate | 2e-4 |
+| Optimizer | Adam |
+| Seed | 42 |
 
 Device:
 
+```
 CUDA if available
 otherwise CPU
-Model Performance
+```
+
+---
+
+# 📊 Model Performance
 
 Training result:
 
+```
 Train F1 Score = 0.79
 Validation F1 Score = 0.62
+```
 
 Multimodal learning improves performance compared to single modality models.
 
-Inference Pipeline
+---
+
+# 🚀 Inference Pipeline
 
 Steps:
 
-1 Load trained model
-2 Extract OCR text
-3 Encode text using DistilBERT
-4 Extract image features using ViT
-5 Fuse text and image features
-6 Predict label
+1. Load trained model  
+2. Extract OCR text  
+3. Encode text using DistilBERT  
+4. Extract image features using ViT  
+5. Fuse text and image features  
+6. Predict label  
 
 Output file:
 
+```
 submission.csv
+```
 
 Format:
 
+```
 filename,label
 image1.jpg,Political
 image2.jpg,NonPolitical
-Installation
+```
+
+---
+
+# 🛠 Installation
 
 Clone the repository:
 
+```
 git clone https://github.com/yourusername/multimodal-meme-classification.git
 cd multimodal-meme-classification
+```
 
 Install dependencies:
 
+```
 pip install torch torchvision
 pip install transformers
 pip install timm
 pip install pytesseract
 pip install albumentations
 pip install pandas numpy scikit-learn
+```
 
 Install Tesseract OCR.
 
 Ubuntu:
 
+```
 sudo apt install tesseract-ocr
-Running the Project
+```
+
+---
+
+# ▶ Running the Project
 
 Train the model:
 
+```
 python train.py
+```
 
 Run inference:
 
+```
 python inference.py
+```
 
 Generate prediction file:
 
+```
 submission.csv
-Project Structure
+```
+
+---
+
+# 📁 Project Structure
+
+```
 multimodal-meme-classification
 │
 ├── train.py
@@ -233,34 +297,38 @@ multimodal-meme-classification
 ├── ocr_test.pkl
 │
 └── README.md
-Future Improvements
+```
+
+---
+
+# 🔮 Future Improvements
 
 Possible improvements:
 
-CLIP based multimodal architecture
+- CLIP based multimodal architecture  
+- Cross attention feature fusion  
+- Better OCR preprocessing  
+- Transformer based multimodal fusion  
+- Training on larger meme datasets  
 
-Cross attention feature fusion
+---
 
-Advanced OCR text cleaning
+# 👨‍💻 Author
 
-Larger dataset training
+Md. Sohag Hossain  
+CSE Student  
+Machine Learning & Data Science Enthusiast
 
-Transformer based multimodal fusion
+---
 
-Author
+# ⭐ Acknowledgements
 
-Md. Sohag Hossain
-CSE Student
-Machine Learning and Data Science Enthusiast
+- CUET CSE Fest  
+- PyTorch  
+- HuggingFace Transformers  
+- TIMM Vision Models  
+- Tesseract OCR  
 
-Acknowledgements
+---
 
-CUET CSE Fest
-
-PyTorch
-
-HuggingFace Transformers
-
-TIMM Vision Models
-
-Tesseract OCR
+⭐ If you find this project useful, please consider giving it a **star ⭐ on GitHub**.
