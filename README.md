@@ -1,5 +1,4 @@
 # 🧠 Multimodal Political Meme Classification
-
 A deep learning based **multimodal classification system** that detects whether a meme is **Political or NonPolitical** by combining **image features and text extracted from the meme**.
 
 This project was developed for the **Poli Meme Decode Contest (CUET CSE Fest)**.
